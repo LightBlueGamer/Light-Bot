@@ -1,12 +1,12 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const economy = require("../../modules/economy");
+const { getBalance } = require("../../modules/economy");
 const { MessageEmbed } = require("discord.js");
 const { config } = require("../../../db/index");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("balance")
-        .setDescription("Shows your balance")
+        .setDescription("Shows balance of a user")
         .addUserOption((option) =>
             option
                 .setName("member")
@@ -20,9 +20,8 @@ module.exports = {
             return interaction.reply({
                 content: "Bots don't have a balance",
             });
-
-        if (!(await economy.hasAccount(interaction.guild.id, member.id)))
-            await economy.setup(interaction.guild.id, member.id);
+            
+        const { balance, bank } = await getBalance(message.guild.id, member.id);
 
         const currency = await config.get(`${interaction.guild.id}.economy.currency`);
         const embed = new MessageEmbed()
@@ -32,14 +31,8 @@ module.exports = {
                     : `${member.displayName}'s balance`
             )
             .setDescription(
-                `Wallet: ${currency.replace(
-                    "{balance}",
-                    await economy.getBalance(interaction.guild.id, member.id)
-                )}
-                Bank: ${currency.replace(
-                    "{balance}",
-                    await economy.getBank(interaction.guild.id, member.id)
-                )}`
+                `Wallet: ${currency.replace("{balance}", balance)}
+                Bank: ${currency.replace("{balance}", bank)}`
             )
             .setColor(member.roles.highest.hexColor);
 

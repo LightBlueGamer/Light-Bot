@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const economy = require("../../modules/economy");
+const { getBalance, deposit} = require("../../modules/economy");
 const { MessageEmbed } = require("discord.js");
 const { config } = require("../../../db/index");
 
@@ -13,8 +13,9 @@ module.exports = {
         .toJSON(),
     async execute(interaction) {
         const amount = interaction.options.getNumber("amount");
-        await economy.deposit(interaction.guild.id, interaction.user.id, amount);
+        await deposit(interaction.guild.id, interaction.user.id, amount);
         const currency = await config.get(`${interaction.guild.id}.economy.currency`);
+        const { balance, bank } = await getBalance(interaction.guild.id, interaction.user.id);
         const embed = new MessageEmbed()
             .setTitle(
                 interaction.member.displayName.endsWith("s")
@@ -22,14 +23,8 @@ module.exports = {
                     : `${interaction.member.displayName}'s balance`
             )
             .setDescription(
-                `Wallet: ${currency.replace(
-                    "{balance}",
-                    await economy.getBalance(interaction.guild.id, interaction.user.id)
-                )}
-                Bank: ${currency.replace(
-                    "{balance}",
-                    await economy.getBank(interaction.guild.id, interaction.user.id)
-                )}`
+                `Wallet: ${currency.replace("{balance}", balance)}
+                Bank: ${currency.replace("{balance}", bank)}`
             )
             .setColor(interaction.member.roles.highest.hexColor);
 

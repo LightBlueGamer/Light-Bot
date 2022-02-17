@@ -1,4 +1,4 @@
-const economy = require("../../modules/economy");
+const { getBalance, deposit } = require("../../modules/economy");
 const { MessageEmbed } = require("discord.js");
 const { config } = require("../../../db/index");
 
@@ -6,6 +6,7 @@ module.exports = {
     name: "deposit",
     description: "Deposit money to your bank",
     async execute(message, args) {
+        const { balance, bank } = await getBalance(message.guild.id, message.author.id);
         const amount = args[0];
         if (!amount)
             return message.reply({
@@ -16,7 +17,7 @@ module.exports = {
                 content: "You must give a number higher than 0 to deposit",
             });
 
-        await economy.deposit(message.guild.id, message.author.id, amount);
+        await deposit(message.guild.id, message.author.id, amount);
         const currency = await config.get(`${message.guild.id}.economy.currency`);
         const embed = new MessageEmbed()
             .setTitle(
@@ -25,14 +26,8 @@ module.exports = {
                     : `${message.member.displayName}'s balance`
             )
             .setDescription(
-                `Wallet: ${currency.replace(
-                    "{balance}",
-                    await economy.getBalance(message.guild.id, message.author.id)
-                )}
-                Bank: ${currency.replace(
-                    "{balance}",
-                    await economy.getBank(message.guild.id, message.author.id)
-                )}`
+                `Wallet: ${currency.replace("{balance}", balance)}
+                Bank: ${currency.replace("{balance}", bank)}`
             )
             .setColor(message.member.roles.highest.hexColor);
 

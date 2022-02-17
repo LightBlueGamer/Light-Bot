@@ -1,4 +1,4 @@
-const levels = require("../../modules/levels");
+const { getLevel, getLevelXP } = require("../../modules/levels");
 const { MessageEmbed } = require("discord.js");
 const { config } = require("../../../db/index");
 
@@ -17,8 +17,7 @@ module.exports = {
                 content: "Bots don't have a level",
             });
 
-        if (!(await levels.hasAccount(message.guild.id, target.id)))
-            await levels.setup(message.guild.id, target.id);
+        const { xp, level } = await getLevel(message.guild.id, target.id);
 
         const embed = new MessageEmbed()
             .setTitle(
@@ -27,11 +26,11 @@ module.exports = {
                     : `${target.displayName}'s level`
             )
             .setDescription(
-                `XP: ${await levels.getXp(message.guild.id, target.id)}
-                Level: ${await levels.getLvl(message.guild.id, target.id)}
+                `XP: ${xp}
+                Level: ${xp}
                 Next lvl: ${
                     (await levels.getLevelXP(message.guild.id, target.id)) -
-                    (await levels.getXp(message.guild.id, target.id))
+                    (xp)
                 } xp`
             )
             .setColor(target.roles.highest.hexColor);

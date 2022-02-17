@@ -1,10 +1,10 @@
-const economy = require("../../modules/economy");
 const { MessageEmbed } = require("discord.js");
 const { config } = require("../../../db/index");
+const { getBalance } = require("../../modules/economy.js")
 
 module.exports = {
     name: "balance",
-    description: "Shows your balance",
+    description: "Shows balance of a user",
     async execute(message, args) {
         const target = args[0]
             ? message.mentions.members.first() ||
@@ -17,8 +17,7 @@ module.exports = {
                 content: "Bots don't have a balance",
             });
 
-        if (!(await economy.hasAccount(message.guild.id, target.id)))
-            await economy.setup(message.guild.id, target.id);
+        const { balance, bank } = await getBalance(message.guild.id, target.id);
 
         const currency = await config.get(`${message.guild.id}.economy.currency`);
         const embed = new MessageEmbed()
@@ -28,14 +27,8 @@ module.exports = {
                     : `${target.displayName}'s balance`
             )
             .setDescription(
-                `Wallet: ${currency.replace(
-                    "{balance}",
-                    await economy.getBalance(message.guild.id, target.id)
-                )}
-                Bank: ${currency.replace(
-                    "{balance}",
-                    await economy.getBank(message.guild.id, target.id)
-                )}`
+                `Wallet: ${currency.replace("{balance}", balance)}
+                Bank: ${currency.replace("{balance}", bank)}`
             )
             .setColor(target.roles.highest.hexColor);
 
