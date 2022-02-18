@@ -44,6 +44,7 @@ module.exports = {
 
             const embed = new MessageEmbed()
             .setTitle(`${message.guild.name} top ${pageIdx * 10 + 10}`)
+            .setDescription(`Page ${page}/${Math.ceil(user.length/10)}`)
             .setColor(message.member.roles.highest.hexColor)
             .setFooter({
                 text: `You are #${sorted.findIndex(x => x.id === message.author.id)+1} out of ${sorted.length}.`
@@ -67,6 +68,7 @@ module.exports = {
 
             const embed = new MessageEmbed()
             .setTitle(`${message.guild.name} top ${pageIdx * 10 + 10}`)
+            .setDescription(`Page ${page}/${Math.ceil(user.length/10)}`)
             .setColor(message.member.roles.highest.hexColor)
             .setFooter({
                 text: `You are #${sorted.findIndex(x => x.id === message.author.id)+1} out of ${sorted.length}.`
