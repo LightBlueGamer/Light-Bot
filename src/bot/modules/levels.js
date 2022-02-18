@@ -3,8 +3,10 @@ const { config, levels, economy } = require("../../db/index");
 async function messageIncome(guildId, userId) {
     const [min, max] = "30,50".split(",").map(Number);
     const inc = max ? Math.round(Math.random() * (max - min) + min) : min;
+    const { prestige } = await getLevel(guildId, userId);
+    const final = inc + (inc*(prestige*0.05))
 
-    return await levels.math(`${guildId}-${userId}.xp`, "+", inc);
+    return await levels.math(`${guildId}-${userId}.xp`, "+", final);
 }
 
 async function getLevelXP(guildId, userId) {
@@ -31,8 +33,15 @@ async function getLevel(guildId, userId) {
     });
     return await levels.ensure(`${guildId}-${userId}`, {
         xp: 0,
-        level: 0
+        level: 0,
+        prestige: 0,
     });
+}
+
+async function prestige(guildId, userId) {
+    await levels.set(`${guildId}-${userId}.xp`, 0);
+    await levels.set(`${guildId}-${userId}.level`, 0);
+    return await levels.inc(`${guildId}-${userId}.prestige`);
 }
 
 module.exports = {
@@ -40,5 +49,6 @@ module.exports = {
     getLevelXP,
     levelUp,
     isEnabled,
-    getLevel
+    getLevel,
+    prestige
 };

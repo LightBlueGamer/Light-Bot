@@ -13,7 +13,7 @@ module.exports = {
         for(const key of await (economy.keys)) {
             if(key.split('-')[0] === message.guild.id) {
                 const { balance, bank } = await getBalance(message.guild.id, key.split('-')[1]);
-                const { xp, level } = await getLevel(message.guild.id, key.split('-')[1]);
+                const { xp, level, prestige } = await getLevel(message.guild.id, key.split('-')[1]);
                 const user = await message.client.users.fetch(key.split('-')[1]);
 
                 users.push({
@@ -21,6 +21,7 @@ module.exports = {
                     id: key.split('-')[1],
                     xp,
                     level,
+                    prestige,
                     balance,
                     bank,
                     total: balance+bank
@@ -60,8 +61,11 @@ module.exports = {
 
         } else if(args[0] === "levels") {
             const sorted = users.sort((a, b) => {
-                if(a.xp < b.xp) return 1;
+                if(a.prestige < b.prestige) return 1;
+                else if(a.prestige === b.prestige && a.xp < b.xp) return 1;
+                else if(a.prestige === b.prestige && a.xp > b.xp) return -1;
                 else if(a.xp > b.xp) return -1;
+                
                 else return 0;
             });
     

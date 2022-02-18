@@ -51,8 +51,11 @@ module.exports = {
                           await config.get(`${message.guild.id}.leveling.levelUpChannel`)
                       );
 
-            channel.send(
+            if(level < 100) channel.send(
                 `${message.member.displayName} you have leveled up to level \`${level+1}\`!`
+            );
+            else channel.send(
+                `${message.member.displayName} you have leveled up to level \`${level+1}\` and can now prestige!`
             );
         }
 
