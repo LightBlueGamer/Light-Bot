@@ -21,7 +21,7 @@ module.exports = {
                 content: "Bots don't have a balance",
             });
             
-        const { balance, bank } = await getBalance(message.guild.id, member.id);
+        const { balance, bank } = await getBalance(interaction.guild.id, member.id);
 
         const currency = await config.get(`${interaction.guild.id}.economy.currency`);
         const embed = new MessageEmbed()
