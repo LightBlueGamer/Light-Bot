@@ -5,6 +5,10 @@ module.exports = {
     name: "interactionCreate",
     async execute(interaction) {
         if (!interaction.isCommand()) return;
+        return interaction.reply({
+            content: "Slash commands are temporarily disabled for the bot.",
+            ephemeral: true,
+        });
         if (!(await config.get(`${interaction.guild.id}.slashcommands`)))
             return interaction.reply({
                 content: "Slash commands are disabled on this server.",
