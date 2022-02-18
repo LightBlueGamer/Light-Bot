@@ -37,7 +37,6 @@ async function getLevel(guildId, userId) {
 
 module.exports = {
     messageIncome,
-    hasAccount,
     getLevelXP,
     levelUp,
     isEnabled,

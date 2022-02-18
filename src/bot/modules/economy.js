@@ -25,7 +25,7 @@ async function isEnabled(guildId, userId) {
     return await config.get(`${guildId}.economy.enabled`);
 }
 
-async function getEconomy(guildId, userId) {
+async function getBalance(guildId, userId) {
     await levels.ensure(`${guildId}-${userId}`, {
         xp: 0,
         level: 0
@@ -40,7 +40,6 @@ module.exports = {
     messageIncome,
     deposit,
     withdraw,
-    hasAccount,
     isEnabled,
-    getEconomy,
+    getBalance,
 };
