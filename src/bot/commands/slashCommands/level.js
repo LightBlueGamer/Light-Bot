@@ -21,7 +21,7 @@ module.exports = {
                 content: "Bots don't have a level",
             });
             
-        const { xp, level } = await getLevel(interaction.guild.id, member.id);
+        const { xp, level, prestige } = await getLevel(interaction.guild.id, member.id);
 
         const embed = new MessageEmbed()
             .setTitle(
@@ -30,7 +30,8 @@ module.exports = {
                     : `${target.displayName}'s level`
             )
             .setDescription(
-                `XP: ${xp}
+                `Prestige: ${prestige}
+                XP: ${xp}
                 Level: ${level}
                 Next lvl: ${
                     (await getLevelXP(interaction.guild.id, member.id)) -
