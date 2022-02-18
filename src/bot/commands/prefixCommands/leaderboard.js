@@ -14,8 +14,8 @@ module.exports = {
 
         for(const key of await (economy.keys)) {
             if(key.split('-')[0] === message.guild.id) {
-                const { balance, bank } = getBalance(message.guild.id, message.author.id);
-                const { xp, level } = getLevel(message.guild.id, message.author.id);
+                const { balance, bank } = await getBalance(message.guild.id, message.author.id);
+                const { xp, level } = await getLevel(message.guild.id, message.author.id);
                 const user = await message.client.users.fetch(key.split('-')[1]);
 
                 users.push({
@@ -46,7 +46,6 @@ module.exports = {
             .setFooter(`You are #${sorted.findIndex(x => x.id === message.author.id)} out of ${sorted.length}.`)
             for(let i=0; i<top10.length; i++) {
                 const ind = top10[i];
-                console.log(ind)
                 embed.addField(`#${sorted.indexOf(ind)+1} ${ind.name}`,`Total: ${ind.total}\nBalance: ${currency.replace("{balance}",ind.balance)}\nBank: ${currency.replace("{balance}",ind.bank)}`)
             };
             return message.reply({
@@ -68,7 +67,6 @@ module.exports = {
             .setFooter(`You are #${sorted.findIndex(x => x.id === message.author.id)+1} out of ${sorted.length}.`)
             for(let i=0; i<top10.length; i++) {
                 const ind = top10[i];
-                console.log(ind);
                 embed.addField(`#${sorted.indexOf(ind)+1} ${ind.name}`,`Level: ${ind.level}\nExp: ${ind.xp}`)
             };
             return message.reply({
