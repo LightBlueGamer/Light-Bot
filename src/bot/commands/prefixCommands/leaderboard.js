@@ -30,6 +30,7 @@ module.exports = {
 
         let page = !arg1 ? 1 : isNaN(arg1) ? 1 : parseInt(arg1);
         if(page*10>users.length) page = Math.ceil(users.length/10);
+        if(page <= 0) page = 1;
         const pageIdx = page - 1;
 
         if(args[0] === "economy") {
