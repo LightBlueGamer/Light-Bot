@@ -14,8 +14,8 @@ module.exports = {
 
         for(const key of await (economy.keys)) {
             if(key.split('-')[0] === message.guild.id) {
-                const { balance, bank } = await getBalance(message.guild.id, message.author.id);
-                const { xp, level } = await getLevel(message.guild.id, message.author.id);
+                const { balance, bank } = await getBalance(message.guild.id, key.split('-')[1]);
+                const { xp, level } = await getLevel(message.guild.id, key.split('-')[1]);
                 const user = await message.client.users.fetch(key.split('-')[1]);
 
                 users.push({
@@ -71,7 +71,6 @@ module.exports = {
             })
             for(let i=0; i<top10.length; i++) {
                 const ind = top10[i];
-                console.log(ind)
                 embed.addField(`#${sorted.indexOf(ind)+1} ${ind.name}`,`Level: ${ind.level}\nExp: ${ind.xp}`)
             };
             return message.reply({
