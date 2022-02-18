@@ -15,7 +15,7 @@ module.exports = {
 
         // Economy
         if (economy.isEnabled && await economy.getBalance(message.guild.id, message.author.id)) {
-
+            const { balance, bank } = await economy.getBalance(message.guild.id, message.author.id);
             if (
                 !ecoCooldown.has(`${message.guild.id}-${message.author.id}`)
             ) {
@@ -41,7 +41,7 @@ module.exports = {
             }
         }
 
-        const xp = await levels.getXp(message.guild.id, message.author.id);
+        const { xp, level } = await levels.getLevel(message.guild.id, message.author.id);
         if (xp >= (await levels.getLevelXP(message.guild.id, message.author.id))) {
             levels.levelUp(message.guild.id, message.author.id);
             const channel =
