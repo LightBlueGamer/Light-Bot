@@ -31,7 +31,7 @@ module.exports = {
             )
             .setDescription(
                 `XP: ${xp}
-                Level: ${xp}
+                Level: ${level}
                 Next lvl: ${
                     (await getLevelXP(interaction.guild.id, member.id)) -
                     (xp)
