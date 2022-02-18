@@ -9,7 +9,7 @@ async function messageIncome(guildId, userId) {
 
 async function getLevelXP(guildId, userId) {
     let xp = 0;
-    const level = await getLvl(guildId, userId);
+    const { xp, level } = await getLevel(guildId, userId);
     for (let i = 0; i < level; i++) {
         xp += 100 * i + 75;
     }
