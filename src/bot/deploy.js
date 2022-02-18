@@ -23,8 +23,8 @@ client.guilds.cache
         if (await config.get(`${guild.id}.slashcommands`)) {
             rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, guild.id), {
                 body: commands,
-            });
+            })
+            .then(() => console.log(`Slash commands enabled for ${guild.name}`))
+            .catch(console.error);
         }
     })
-    .then(() => console.log("Successfully registered application commands."))
-    .catch(console.error);
