@@ -14,9 +14,7 @@ module.exports = {
         if (message.author.bot) return;
 
         // Economy
-        if (economy.isEnabled) {
-            if (economy.hasAccount(message.guild.id, message.author.id))
-                await economy.setup(message.guild.id, message.author.id);
+        if (economy.isEnabled && await economy.getBalance(message.guild.id, message.author.id)) {
 
             if (
                 !ecoCooldown.has(`${message.guild.id}-${message.author.id}`) &&
@@ -30,9 +28,7 @@ module.exports = {
             }
         }
         // Leveling
-        if (levels.isEnabled) {
-            if (levels.hasAccount(message.guild.id, message.author.id))
-                await levels.setup(message.guild.id, message.author.id);
+        if (levels.isEnabled && await levels.getLevel(message.guild.id, message.author.id)) {
 
             if (
                 !lvlCooldown.has(`${message.guild.id}-${message.author.id}`) &&
