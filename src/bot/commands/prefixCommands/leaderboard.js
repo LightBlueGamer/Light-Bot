@@ -9,8 +9,6 @@ module.exports = {
     async execute(message, args) {
         const users = [];
         const arg1 = args[1];
-        const page = !arg1 ? 1 : isNaN(arg1) ? 1 : parseInt(arg1);
-        const pageIdx = page - 1;
 
         for(const key of await (economy.keys)) {
             if(key.split('-')[0] === message.guild.id) {
@@ -29,6 +27,10 @@ module.exports = {
                 });
             };
         };
+
+        let page = !arg1 ? 1 : isNaN(arg1) ? 1 : parseInt(arg1);
+        if(page*10 > users.length) page = Math.floor(users.length/10);
+        const pageIdx = page - 1;
 
         if(args[0] === "economy") {
             const currency = await config.get(`${message.guild.id}.economy.currency`);
