@@ -1,4 +1,4 @@
-const { config, levels } = require("../../db/index");
+const { config, levels, economy } = require("../../db/index");
 
 async function messageIncome(guildId, userId) {
     const [min, max] = "30,50".split(",").map(Number);
@@ -25,9 +25,13 @@ async function isEnabled(guildId, userId) {
 }
 
 async function getLevel(guildId, userId) {
+    await economy.ensure(`${guildId}-${userId}`, {
+        balance: await config.get(`${guildId}.economy.startingBalance`),
+        bank: 0
+    });
     return await levels.ensure(`${guildId}-${userId}`, {
         xp: 0,
-        level: 0,
+        level: 0
     });
 }
 

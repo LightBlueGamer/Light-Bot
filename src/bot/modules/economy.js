@@ -1,4 +1,4 @@
-const { config, economy } = require("../../db/index");
+const { config, economy, levels } = require("../../db/index");
 
 async function messageIncome(guildId, userId) {
     const [min, max] = (await config.get(`${guildId}.economy.messageIncome`))
@@ -26,9 +26,13 @@ async function isEnabled(guildId, userId) {
 }
 
 async function getEconomy(guildId, userId) {
+    await levels.ensure(`${guildId}-${userId}`, {
+        xp: 0,
+        level: 0
+    });
     return await economy.ensure(`${guildId}-${userId}`, {
         balance: await config.get(`${guildId}.economy.startingBalance`),
-        bank: 0,
+        bank: 0
     });
 }
 
