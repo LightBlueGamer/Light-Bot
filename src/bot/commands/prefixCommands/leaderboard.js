@@ -12,7 +12,7 @@ module.exports = {
         const page = !arg1 ? 1 : isNaN(arg1) ? 1 : parseInt(arg1);
         const pageIdx = page - 1;
 
-        for(const key of economy.keys) {
+        for(const key of await (economy.keys)) {
             if(key.split('-')[0] === message.guild.id) {
                 const { balance, bank } = getBalance(message.guild.id, message.author.id);
                 const { xp, level } = getLevel(message.guild.id, message.author.id);
