@@ -52,10 +52,7 @@ module.exports = {
                       );
 
             channel.send(
-                `${message.member.displayName} you have leveled up to level \`${await levels.getLvl(
-                    message.guild.id,
-                    message.author.id
-                )}\`!`
+                `${message.member.displayName} you have leveled up to level \`${level+1}\`!`
             );
         }
 
