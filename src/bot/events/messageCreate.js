@@ -17,8 +17,7 @@ module.exports = {
         if (economy.isEnabled && await economy.getBalance(message.guild.id, message.author.id)) {
 
             if (
-                !ecoCooldown.has(`${message.guild.id}-${message.author.id}`) &&
-                economy.hasAccount(message.guild.id, message.author.id)
+                !ecoCooldown.has(`${message.guild.id}-${message.author.id}`)
             ) {
                 await economy.messageIncome(message.guild.id, message.author.id);
                 ecoCooldown.add(`${message.guild.id}-${message.author.id}`);
@@ -31,8 +30,7 @@ module.exports = {
         if (levels.isEnabled && await levels.getLevel(message.guild.id, message.author.id)) {
 
             if (
-                !lvlCooldown.has(`${message.guild.id}-${message.author.id}`) &&
-                levels.hasAccount(message.guild.id, message.author.id)
+                !lvlCooldown.has(`${message.guild.id}-${message.author.id}`)
             ) {
                 await levels.messageIncome(message.guild.id, message.author.id);
                 lvlCooldown.add(`${message.guild.id}-${message.author.id}`);
