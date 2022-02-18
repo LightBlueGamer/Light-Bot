@@ -42,7 +42,7 @@ module.exports = {
 
             const embed = new MessageEmbed()
             .setTitle(`${message.guild.name} top ${pageIdx * 10 + 10}`)
-            .setColor(member.roles.highest.hexColor)
+            .setColor(message.member.roles.highest.hexColor)
             .setFooter(`You are #${sorted.findIndex(x => x.id === message.author.id)} out of ${sorted.length}.`)
             for(let i=0; i<top10.length; i++) {
                 const ind = top10[i];
@@ -63,7 +63,7 @@ module.exports = {
 
             const embed = new MessageEmbed()
             .setTitle(`${message.guild.name} top ${pageIdx * 10 + 10}`)
-            .setColor(member.roles.highest.hexColor)
+            .setColor(message.member.roles.highest.hexColor)
             .setFooter(`You are #${sorted.findIndex(x => x.id === message.author.id)} out of ${sorted.length}.`)
             for(let i=0; i<top10.length; i++) {
                 const ind = top10[i];
