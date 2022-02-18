@@ -43,7 +43,9 @@ module.exports = {
             const embed = new MessageEmbed()
             .setTitle(`${message.guild.name} top ${pageIdx * 10 + 10}`)
             .setColor(message.member.roles.highest.hexColor)
-            .setFooter(`You are #${sorted.findIndex(x => x.id === message.author.id)} out of ${sorted.length}.`)
+            .setFooter({
+                text: `You are #${sorted.findIndex(x => x.id === message.author.id)+1} out of ${sorted.length}.`
+            })
             for(let i=0; i<top10.length; i++) {
                 const ind = top10[i];
                 embed.addField(`#${sorted.indexOf(ind)+1} ${ind.name}`,`Total: ${ind.total}\nBalance: ${currency.replace("{balance}",ind.balance)}\nBank: ${currency.replace("{balance}",ind.bank)}`)
@@ -64,7 +66,9 @@ module.exports = {
             const embed = new MessageEmbed()
             .setTitle(`${message.guild.name} top ${pageIdx * 10 + 10}`)
             .setColor(message.member.roles.highest.hexColor)
-            .setFooter(`You are #${sorted.findIndex(x => x.id === message.author.id)+1} out of ${sorted.length}.`)
+            .setFooter({
+                text: `You are #${sorted.findIndex(x => x.id === message.author.id)+1} out of ${sorted.length}.`
+            })
             for(let i=0; i<top10.length; i++) {
                 const ind = top10[i];
                 embed.addField(`#${sorted.indexOf(ind)+1} ${ind.name}`,`Level: ${ind.level}\nExp: ${ind.xp}`)
