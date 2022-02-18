@@ -29,7 +29,7 @@ module.exports = {
                 `XP: ${xp}
                 Level: ${xp}
                 Next lvl: ${
-                    (await levels.getLevelXP(message.guild.id, target.id)) -
+                    (await getLevelXP(message.guild.id, target.id)) -
                     (xp)
                 } xp`
             )

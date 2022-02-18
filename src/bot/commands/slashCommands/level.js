@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { getLevel } = require("../../modules/economy");
+const { getLevel, getLevelXP } = require("../../modules/economy");
 const { MessageEmbed } = require("discord.js");
 const { config } = require("../../../db/index");
 
@@ -33,7 +33,7 @@ module.exports = {
                 `XP: ${xp}
                 Level: ${xp}
                 Next lvl: ${
-                    (await levels.getLevelXP(interaction.guild.id, member.id)) -
+                    (await getLevelXP(interaction.guild.id, member.id)) -
                     (xp)
                 } xp`
             )
