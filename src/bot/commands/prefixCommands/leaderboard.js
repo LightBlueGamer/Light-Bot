@@ -80,7 +80,7 @@ module.exports = {
             })
             for(let i=0; i<top10.length; i++) {
                 const ind = top10[i];
-                embed.addField(`#${sorted.indexOf(ind)+1} ${ind.name}`,`Level: ${ind.level}\nExp: ${ind.xp}`)
+                embed.addField(`#${sorted.indexOf(ind)+1} ${ind.name}`,`Prestige: ${ind.prestige}\nLevel: ${ind.level}\nExp: ${ind.xp}`)
             };
             return message.reply({
                 embeds: [embed]
