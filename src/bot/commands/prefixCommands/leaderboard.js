@@ -71,6 +71,7 @@ module.exports = {
             })
             for(let i=0; i<top10.length; i++) {
                 const ind = top10[i];
+                console.log(ind)
                 embed.addField(`#${sorted.indexOf(ind)+1} ${ind.name}`,`Level: ${ind.level}\nExp: ${ind.xp}`)
             };
             return message.reply({
